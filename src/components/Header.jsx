@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import logo from '../assets/images/logo.png'
 import { contactInfo } from '../data/products.js'
+import { useCart } from '../context/CartContext.jsx'
 
 const NAV_LINKS = [
   { to: '/', label: 'Home', end: true },
@@ -15,6 +16,7 @@ export default function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const close = () => setOpen(false)
+  const { count, openDrawer } = useCart()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -60,6 +62,10 @@ export default function Header() {
           <a className="icon-btn" href={`mailto:${contactInfo.email}`} aria-label="Email us">
             <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5.5" width="17" height="13" rx="2" stroke="currentColor" strokeWidth="1.6" /><path d="m4.5 7 7.5 6 7.5-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </a>
+          <button type="button" className="cart-btn" onClick={() => { close(); openDrawer() }} aria-label={`Open cart, ${count} item${count === 1 ? '' : 's'}`}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round"><path d="M3.5 4.5h2l2.2 10.2a1.5 1.5 0 0 0 1.5 1.2h7.9a1.5 1.5 0 0 0 1.4-1.1l1.6-6.3H6.4" /><circle cx="9.5" cy="19.5" r="1.2" /><circle cx="17" cy="19.5" r="1.2" /></svg>
+            {count > 0 && <span className="cart-badge">{count}</span>}
+          </button>
           <Link to="/contact-us" className="btn btn-primary btn-sm header-cta">Request a Quote</Link>
           <button
             className={`nav-toggle${open ? ' is-open' : ''}`}

@@ -2,7 +2,7 @@
  * Eyebrow + serif title on the left, optional supporting copy or link on the right.
  */
 export default function SectionHead({ eyebrow, title, aside, light = false }) {
-  // `title` may contain an <em> for the italic amber accent word.
+  // `title` may contain an <em> for the italic blue accent word.
   return (
     <div className={`section-head reveal${light ? ' section-head--light' : ''}`}>
       <div>

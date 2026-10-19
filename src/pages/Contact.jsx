@@ -50,7 +50,7 @@ export default function Contact() {
       <section className="section section--top-tight">
         <div className="container contact-grid reveal">
           <div className="contact-info-card">
-            <p className="eyebrow eyebrow--amber">Get in touch</p>
+            <p className="eyebrow eyebrow--sky">Get in touch</p>
             <h2 className="display">We&rsquo;d love to <em>hear from you.</em></h2>
             <ul className="contact-info-list">
               {items.map((item) => (

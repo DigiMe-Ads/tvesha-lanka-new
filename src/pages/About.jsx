@@ -49,7 +49,7 @@ export default function About() {
         <div className="container">
           <div className="philosophy-card philosophy-card--about reveal">
             <div className="philosophy-copy">
-              <p className="eyebrow eyebrow--rule eyebrow--amber">Looking ahead</p>
+              <p className="eyebrow eyebrow--rule eyebrow--sky">Looking ahead</p>
               <h2 className="display display--lg">Redefining boundaries, <em>setting new benchmarks.</em></h2>
               <p>
                 As we look ahead, the future of Tvesha Lanka Pvt Ltd is filled with immense

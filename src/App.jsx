@@ -2,11 +2,13 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
+import CartDrawer from './components/CartDrawer.jsx'
 import Home from './pages/Home.jsx'
 import About from './pages/About.jsx'
 import Products from './pages/Products.jsx'
 import CottonYarn from './pages/CottonYarn.jsx'
 import Contact from './pages/Contact.jsx'
+import Checkout from './pages/Checkout.jsx'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -58,9 +60,11 @@ export default function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/cotton-yarn" element={<CottonYarn />} />
           <Route path="/contact-us" element={<Contact />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </main>
       <Footer />
+      <CartDrawer />
     </div>
   )
 }

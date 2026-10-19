@@ -4,7 +4,7 @@ import bannerImg from '../assets/images/page-banner.jpg'
 
 /**
  * Title + breadcrumb banner at the top of every inner page.
- * `title` may contain an <em> for the italic amber accent word.
+ * `title` may contain an <em> for the italic blue accent word.
  */
 export default function PageBanner({ title, crumb, eyebrow, text }) {
   return (

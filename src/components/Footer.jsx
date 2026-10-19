@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Ornament from './Ornament.jsx'
 import logo from '../assets/images/logo.png'
 import { contactInfo, productCategories } from '../data/products.js'
@@ -30,7 +30,7 @@ function InvitationBand() {
   return (
     <section className="invitation">
       <div className="container invitation-inner reveal">
-        <p className="eyebrow eyebrow--amber">An invitation</p>
+        <p className="eyebrow eyebrow--sky">An invitation</p>
         <h2 className="display display--xl">
           Let&rsquo;s bring Ceylon
           <br />
@@ -41,7 +41,7 @@ function InvitationBand() {
           for spices, flours and natural sweets, our team would love to hear from you.
         </p>
         <div className="invitation-actions">
-          <Link to="/contact-us" className="btn btn-amber">
+          <Link to="/contact-us" className="btn btn-sky">
             Request a Quote <span aria-hidden="true">&#8599;</span>
           </Link>
           <Link to="/products" className="btn btn-ghost-light">Browse Products</Link>
@@ -86,10 +86,12 @@ function FooterNewsletter() {
 
 export default function Footer() {
   const year = new Date().getFullYear()
+  // The invitation CTA would only distract mid-purchase.
+  const onCheckout = useLocation().pathname === '/checkout'
 
   return (
     <>
-      <InvitationBand />
+      {!onCheckout && <InvitationBand />}
       <footer className="site-footer">
         <div className="container">
           <div className="footer-ornament">

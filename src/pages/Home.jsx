@@ -213,7 +213,7 @@ export default function Home() {
       <section className="section section--dark journey">
         <div className="container">
           <div className="journey-head reveal">
-            <p className="eyebrow eyebrow--amber eyebrow--center">The Tvesha journey</p>
+            <p className="eyebrow eyebrow--sky eyebrow--center">The Tvesha journey</p>
             <h2 className="display display--lg">From source <em>to shipment.</em></h2>
           </div>
           <ol className="journey-list">
@@ -234,7 +234,7 @@ export default function Home() {
         <div className="container">
           <div className="philosophy-card reveal">
             <div className="philosophy-copy">
-              <p className="eyebrow eyebrow--rule eyebrow--amber">The Tvesha philosophy</p>
+              <p className="eyebrow eyebrow--rule eyebrow--sky">The Tvesha philosophy</p>
               <h2 className="display display--lg">Goodness, where <em>nature intended.</em></h2>
               <p>
                 The world&rsquo;s most remarkable ingredients carry the character of the places
@@ -268,14 +268,14 @@ export default function Home() {
         </div>
         <div className="bleed-split-copy">
           <div className="reveal">
-            <p className="eyebrow eyebrow--amber eyebrow--underline">Beyond the spice rack</p>
+            <p className="eyebrow eyebrow--sky eyebrow--underline">Beyond the spice rack</p>
             <h2 className="display display--lg">100% recycled <em>cotton yarn.</em></h2>
             <p>
               Crafted from post-consumer cotton garments, each strand embodies a commitment to
               reducing waste and preserving our planet. Available in any colour, with twisted
               and single threads.
             </p>
-            <Link to="/cotton-yarn" className="btn btn-line-amber">Discover Cotton Yarn</Link>
+            <Link to="/cotton-yarn" className="btn btn-line-sky">Discover Cotton Yarn</Link>
           </div>
         </div>
       </section>
