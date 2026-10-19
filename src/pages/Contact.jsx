@@ -42,15 +42,16 @@ export default function Contact() {
   return (
     <>
       <PageBanner
-        title={<>Contact <em>Us</em></>}
-        crumb="Contact Us"
-        eyebrow="Let's talk"
+        title={<>Let&rsquo;s <em>talk</em></>}
+        crumb="Contact"
+        bgword="Hello"
+        eyebrow="Contact us"
         text="For export enquiries, quotations or partnerships, our team is happy to help."
       />
       <section className="section section--top-tight">
-        <div className="container contact-grid reveal">
-          <div className="contact-info-card">
-            <p className="eyebrow eyebrow--sky">Get in touch</p>
+        <div className="container contact-layout reveal">
+          <div className="contact-details">
+            <p className="eyebrow eyebrow--rule">(01) &nbsp;Get in touch</p>
             <h2 className="display">We&rsquo;d love to <em>hear from you.</em></h2>
             <ul className="contact-info-list">
               {items.map((item) => (
@@ -70,15 +71,15 @@ export default function Contact() {
 
       <section className="section section--top-tight">
         <div className="container">
-          <SectionHead eyebrow="Horton Place, Colombo 07" title={<>Our <em>Location</em></>} />
-          <div className="map-embed reveal">
-            <iframe
-              title="Tvesha Lanka (Pvt) Ltd location"
-              src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
+          <SectionHead index="03" eyebrow="Horton Place, Colombo 07" title={<>Find <em>us</em></>} />
+        </div>
+        <div className="map-embed reveal">
+          <iframe
+            title="Tvesha Lanka (Pvt) Ltd location"
+            src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
         </div>
       </section>
     </>

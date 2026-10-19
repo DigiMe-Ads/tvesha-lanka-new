@@ -34,23 +34,6 @@ export const productCategories = CATEGORY_NAMES.map((name) => ({
   count: allProducts.filter((p) => p.category === name).length,
 }))
 
-const byId = (ids) => ids.map((id) => allProducts.find((p) => p.id === id))
-
-// "The Spice Chest" row on the Home page.
-export const spiceChest = byId(['cardamom', 'pepper', 'cloves', 'nutmeg'])
-
-// "Our Favourite Picks" grid on the Home page.
-export const homeProducts = byId([
-  'cardamom',
-  'nutmeg',
-  'cinnamon-c5',
-  'moringa-powder',
-  'kithul-treacle',
-  'c5-special',
-  'cotton-yarn',
-  'coconut-shell-vase',
-])
-
 export const contactInfo = {
   address: ['#33, Horton Place, Colombo- 07,', 'Sri Lanka'],
   phone: '+94 112 681 315',

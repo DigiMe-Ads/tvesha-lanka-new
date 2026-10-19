@@ -1,63 +1,90 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import HeroBanner from '../components/HeroBanner.jsx'
 import FeatureStrip from '../components/FeatureStrip.jsx'
 import SectionHead from '../components/SectionHead.jsx'
 import ProductGrid from '../components/ProductGrid.jsx'
+import ProductRail from '../components/ProductRail.jsx'
 import QuoteBand from '../components/QuoteBand.jsx'
-import { allProducts, homeProducts, productCategories, spiceChest } from '../data/products.js'
+import { allProducts, productCategories } from '../data/products.js'
 import yarnImg from '../assets/images/cotton-yarn.jpg'
 import bannerImg from '../assets/images/page-banner.jpg'
-import cinnamonImg from '../assets/images/spice-cinnamon-chips.jpg'
+import skylineImg from '../assets/images/about-skyline.jpg'
+import awardImg from '../assets/images/about-award.jpg'
+import cinnamonImg from '../assets/images/product-cinnamon-c5.jpg'
 import flourImg from '../assets/images/product-moringa-powder.jpg'
 import sweetImg from '../assets/images/product-kithul-treacle.jpg'
 import spicesImg from '../assets/images/spice-curry-powder.jpg'
+import vaseImg from '../assets/images/product-coconut-shell-vase.jpg'
 
 const COLLECTIONS = [
-  { title: 'Spices', sub: 'Explore Spices', image: spicesImg, category: 'Spices' },
-  { title: 'Ceylon Cinnamon', sub: 'True Cinnamon Grades', image: cinnamonImg, category: 'Cinnamon Varieties' },
-  { title: 'Nutritional Flour', sub: 'Wholesome Goodness', image: flourImg, category: 'Nutritional Flour' },
-  { title: 'Healthy Sweet', sub: 'Natural Sweeteners', image: sweetImg, category: 'Healthy Sweet' },
+  { title: 'Spices', sub: 'Cardamom, cloves, pepper, nutmeg & blends', image: spicesImg, category: 'Spices' },
+  { title: 'Ceylon Cinnamon', sub: 'C5, C5 Special, chips, powder & leaf oil', image: cinnamonImg, category: 'Cinnamon Varieties' },
+  { title: 'Nutritional Flour', sub: 'Moringa and wholesome island flours', image: flourImg, category: 'Nutritional Flour' },
+  { title: 'Healthy Sweet', sub: 'Pure kithul treacle from the palm', image: sweetImg, category: 'Healthy Sweet' },
+  { title: 'Art & Culture', sub: 'Hand-crafted coconut shell pieces', image: vaseImg, category: 'Art & Culture' },
 ]
 
 const STATS = [
-  { value: `${allProducts.length}+`, label: 'Island products', note: 'Spices to cotton yarn' },
-  { value: `${productCategories.length}`, label: 'Product lines', note: 'And growing' },
-  { value: '100%', label: 'Ceylon origin', note: 'Sourced across Sri Lanka' },
-  { value: '∞', label: 'Shipments ahead', note: 'Wherever the world takes us' },
+  { value: `${allProducts.length}+`, label: 'Island products' },
+  { value: `${productCategories.length}`, label: 'Product lines' },
+  { value: '100%', label: 'Ceylon origin' },
+  { value: '∞', label: 'Shipments ahead' },
 ]
 
-const PROMISES = [
-  { title: 'Taste & Purity', text: 'Every product checked for the purity it promises.', icon: 'leaf' },
-  { title: 'Quality Assured', text: 'Carefully selected, from source to shipment.', icon: 'seal' },
-  { title: 'Customer First', text: 'Exceptional service for clients across the globe.', icon: 'globe' },
-  { title: 'Looking Ahead', text: 'Growing into new lines, including cosmetics.', icon: 'compass' },
+const VALUES = [
+  { title: 'Origin', text: 'Spices sourced from the finest regions of the island, carefully selected for their aroma and taste.' },
+  { title: 'Heritage', text: 'Cinnamon is the most valuable spice Sri Lanka produces, prized around the world for its distinctive aroma and flavour.' },
+  { title: 'Taste & purity', text: 'Every product is checked for the purity it promises, from source to shipment.' },
+  { title: 'Customer first', text: 'A small, dedicated team that takes care with every order, every shipment and every partner.' },
+  { title: 'Looking ahead', text: 'Growing into new lines, including a planned expansion into cosmetics.' },
 ]
 
 const JOURNEY = [
-  { step: '01', title: 'Sourced at origin', text: 'We work with growers across the island’s spice regions, from the wet-zone cinnamon belts to the hill-country cardamom estates.' },
-  { step: '02', title: 'Selected by hand', text: 'Each batch is graded and checked for aroma, colour and purity before it earns a place in our catalogue.' },
-  { step: '03', title: 'Prepared with care', text: 'Drying, grinding and processing are handled to protect the natural oils and character of every product.' },
-  { step: '04', title: 'Packed for export', text: 'Sealed and documented to international standards, ready for the journey to your shelves.' },
+  { step: 'I', title: 'Sourced at origin', text: 'We work with growers across the island’s spice regions, from the wet-zone cinnamon belts to the hill-country cardamom estates.' },
+  { step: 'II', title: 'Selected by hand', text: 'Each batch is graded and checked for aroma, colour and purity before it earns a place in our catalogue.' },
+  { step: 'III', title: 'Prepared with care', text: 'Drying, grinding and processing are handled to protect the natural oils and character of every product.' },
+  { step: 'IV', title: 'Packed for export', text: 'Sealed and documented to international standards, ready for the journey to your shelves.' },
 ]
 
-const PHILOSOPHY = [
-  { tag: 'Origin', title: 'From Where it Belongs', text: 'Spices sourced from the finest regions of the island, carefully selected for their aroma and taste.' },
-  { tag: 'Heritage', title: 'Ceylon, Left to Speak', text: 'Cinnamon is the most valuable spice Sri Lanka produces, prized for its distinctive aroma and flavour.' },
-  { tag: 'Craft', title: 'Made with Intention', text: 'A small, dedicated team that takes care with every order, every shipment and every partner.' },
-]
+// First item becomes the large bento feature tile.
+const FAVOURITE_IDS = ['cinnamon-c5', 'cardamom', 'nutmeg', 'moringa-powder', 'kithul-treacle', 'c5-special', 'cotton-yarn', 'coconut-shell-vase', 'cinnamon-leaf-oil']
+const favourites = FAVOURITE_IDS.map((id) => allProducts.find((p) => p.id === id))
 
-const ICONS = {
-  leaf: <><path d="M12 20c0-8 4.7-12.7 9.3-14-.6 6.7-4 11.3-9.3 14Z" /><path d="M12 20c0-8-4.7-12.7-9.3-14 .6 6.7 4 11.3 9.3 14Z" /></>,
-  seal: <><circle cx="12" cy="10" r="6" /><path d="m9 15-1.5 6L12 19l4.5 2L15 15" /></>,
-  globe: <><circle cx="12" cy="12" r="8.5" /><path d="M3.5 12h17M12 3.5c2.5 2.4 3.6 5.2 3.6 8.5s-1.1 6.1-3.6 8.5c-2.5-2.4-3.6-5.2-3.6-8.5S9.5 5.9 12 3.5Z" /></>,
-  compass: <><circle cx="12" cy="12" r="8.5" /><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z" /></>,
-}
+const spiceRail = allProducts.filter((p) => p.category === 'Spices' || p.category === 'Cinnamon Varieties')
 
-function LineIcon({ name }) {
+function CollectionIndex() {
+  const [active, setActive] = useState(0)
+
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" strokeLinecap="round" aria-hidden="true">
-      {ICONS[name]}
-    </svg>
+    <div className="cindex">
+      <ol className="cindex-list">
+        {COLLECTIONS.map((c, i) => (
+          <li key={c.title}>
+            <Link
+              to={`/products?category=${encodeURIComponent(c.category)}`}
+              className={`cindex-row${active === i ? ' is-active' : ''}`}
+              onMouseEnter={() => setActive(i)}
+              onFocus={() => setActive(i)}
+            >
+              <span className="cindex-num">{String(i + 1).padStart(2, '0')}</span>
+              <img className="cindex-thumb" src={c.image} alt="" loading="lazy" />
+              <span className="cindex-text">
+                <span className="cindex-title">{c.title}</span>
+                <span className="cindex-sub">{c.sub}</span>
+              </span>
+              <span className="cindex-arrow" aria-hidden="true">&rarr;</span>
+            </Link>
+          </li>
+        ))}
+      </ol>
+      <div className="cindex-preview" aria-hidden="true">
+        {COLLECTIONS.map((c, i) => (
+          <img key={c.title} src={c.image} alt="" className={active === i ? 'is-active' : undefined} loading="lazy" />
+        ))}
+        <span className="cindex-preview-label">{COLLECTIONS[active].title}</span>
+      </div>
+    </div>
   )
 }
 
@@ -70,88 +97,61 @@ export default function Home() {
       <section className="section">
         <div className="container">
           <SectionHead
-            eyebrow="Nature's finest treasures"
-            title={<>Explore Our <em>Collection</em></>}
-            aside={<p>Browse our Ceylon spices, true cinnamon grades, nutritional flours and natural sweets, all sourced from the island.</p>}
+            index="01"
+            eyebrow="The collection"
+            title={<>Five lines, <em>one island.</em></>}
+            aside={<Link to="/products" className="text-link">View all products</Link>}
           />
-          <div className="collection-grid">
-            {COLLECTIONS.map((c, i) => (
-              <Link
-                key={c.title}
-                to={`/products?category=${encodeURIComponent(c.category)}`}
-                className="collection-card reveal"
-                style={{ '--reveal-delay': `${i * 90}ms` }}
-              >
-                <img src={c.image} alt="" loading="lazy" />
-                <span className="collection-card-num">{String(i + 1).padStart(2, '0')}</span>
-                <div className="collection-card-copy">
-                  <h3>{c.title}</h3>
-                  <span>{c.sub} <span aria-hidden="true">&#8599;</span></span>
-                </div>
-              </Link>
-            ))}
+          <CollectionIndex />
+        </div>
+      </section>
+
+      <section className="section section--sand story">
+        <div className="container story-grid">
+          <div className="story-collage reveal">
+            <figure className="story-img story-img--main">
+              <img src={skylineImg} alt="Colombo skyline across the Beira Lake" loading="lazy" />
+            </figure>
+            <figure className="story-img story-img--inset">
+              <img src={awardImg} alt="Tvesha Lanka export award" loading="lazy" />
+            </figure>
+            <span className="story-seal">
+              Recognised in the Diribala Exporter Development Program
+            </span>
+          </div>
+          <div className="story-copy reveal">
+            <p className="eyebrow eyebrow--rule">(02) &nbsp;From the island, with intention</p>
+            <h2 className="display display--lg">Rooted in Ceylon&rsquo;s <em>spice story.</em></h2>
+            <p className="dropcap">
+              Founded by Mr. Mahendran Madhavan, a visionary entrepreneur from a family with a
+              strong business background, Tvesha Lanka Pvt Ltd has established itself as a key
+              player in the export and import industry.
+            </p>
+            <p>
+              Our limited but dedicated team works with utmost care, with a strong focus on
+              quality, innovation and customer satisfaction for clients across the globe.
+            </p>
+            <ul className="story-points">
+              <li><span>i.</span>Authentic &amp; pure</li>
+              <li><span>ii.</span>Thoughtfully selected</li>
+              <li><span>iii.</span>Globally trusted</li>
+            </ul>
+            <Link to="/about-us" className="btn btn-outline">Read our story</Link>
           </div>
         </div>
       </section>
 
-      <section className="section section--tight">
-        <div className="container">
-          <div className="story-card reveal">
-            <div className="story-copy">
-              <p className="eyebrow eyebrow--rule">From the island, with intention</p>
-              <h2 className="display display--lg">Rooted in Ceylon&rsquo;s <em>spice story.</em></h2>
-              <p>
-                Founded by Mr. Mahendran Madhavan, a visionary entrepreneur from a family with
-                a strong business background, Tvesha Lanka Pvt Ltd has established itself as a
-                key player in the export and import industry.
-              </p>
-              <div className="chip-row">
-                <span className="chip">Ceylon Cinnamon</span>
-                <span className="chip">Cardamom</span>
-                <span className="chip">Black Pepper</span>
-              </div>
-              <div className="story-points">
-                <div>
-                  <h4>Authentic &amp; Pure</h4>
-                  <p>Rooted in the island&rsquo;s rich spice heritage.</p>
-                </div>
-                <div>
-                  <h4>Thoughtfully Selected</h4>
-                  <p>Products worthy of a place on your table.</p>
-                </div>
-                <div>
-                  <h4>Globally Trusted</h4>
-                  <p>Delivering to clients across the world.</p>
-                </div>
-              </div>
-            </div>
-            <div className="story-emblem">
-              <div className="story-emblem-ring">
-                <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                  <path d="M24 40c0-12 7-19 14-21-1 10-6 17-14 21Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-                  <path d="M24 40c0-12-7-19-14-21 1 10 6 17 14 21Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-                  <path d="M24 40V18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-                </svg>
-                <span className="story-emblem-kicker">Tvesha Lanka</span>
-                <span className="story-emblem-word">CEYLON</span>
-                <span className="story-emblem-sub">spice &middot; export &middot; heritage</span>
-              </div>
-              <div className="story-emblem-tag">
-                Recognised in the Diribala Exporter Development Program
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section section--sand">
+      <section className="section">
         <div className="container">
           <SectionHead
-            eyebrow="Curated spice collection"
-            title={<>The Spice <em>Chest</em></>}
-            aside={<Link to="/products?category=Spices" className="text-link">Explore all spices <span aria-hidden="true">&#8599;</span></Link>}
+            index="03"
+            eyebrow="The spice chest"
+            title={<>Spices &amp; <em>true cinnamon</em></>}
+            aside={<p>Hand-picked from the island&rsquo;s spice gardens. Add to your cart and check out in a few clicks.</p>}
           />
-          <ProductGrid products={spiceChest} columns={4} />
+        </div>
+        <div className="container container--rail">
+          <ProductRail products={spiceRail} label="Spices and cinnamon" />
         </div>
       </section>
 
@@ -163,67 +163,44 @@ export default function Home() {
       />
 
       <section className="section">
-        <div className="container note-grid">
-          <div className="note-copy reveal">
-            <p className="eyebrow eyebrow--rule">A legacy of trust &amp; tradition</p>
-            <h2 className="display display--lg">
-              One company. Many products.
-              <br />
-              <em>One promise.</em>
+        <div className="container">
+          <div className="promise reveal">
+            <p className="eyebrow eyebrow--rule">(04) &nbsp;A legacy of trust &amp; tradition</p>
+            <h2 className="promise-title">
+              One company. Many products. <em>One promise.</em>
             </h2>
-            <span className="note-rule" aria-hidden="true" />
-            <p className="lead">
-              At Tvesha Lanka Pvt Ltd, our limited but dedicated team works with utmost
-              happiness and dedication, ensuring the smooth operation of all our endeavours.
-              With a strong focus on quality, innovation and customer satisfaction, we deliver
-              exceptional products and services to clients across the globe.
+            <p className="promise-text">
+              At Tvesha Lanka Pvt Ltd, our team works with utmost happiness and dedication,
+              ensuring the smooth operation of all our endeavours, and delivering exceptional
+              products and service to clients across the globe.
             </p>
-            <p className="note-quote">&ldquo;A small team, careful hands and a global reach.&rdquo;</p>
-            <Link to="/about-us" className="text-link text-link--caps">Our story <span aria-hidden="true">&#8599;</span></Link>
           </div>
-          <div className="stat-grid reveal">
+          <dl className="stat-row reveal">
             {STATS.map((s) => (
-              <div className="stat" key={s.label}>
-                <span className="stat-value">{s.value}</span>
-                <span className="stat-label">{s.label}</span>
-                <span className="stat-note">{s.note}</span>
+              <div key={s.label}>
+                <dt>{s.value}</dt>
+                <dd>{s.label}</dd>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section section--tight">
-        <div className="container">
-          <div className="promise-cards">
-            {PROMISES.map((p, i) => (
-              <article className="promise-card reveal" key={p.title} style={{ '--reveal-delay': `${i * 90}ms` }}>
-                <div className="promise-card-top">
-                  <LineIcon name={p.icon} />
-                  <span>{i + 1}</span>
-                </div>
-                <h3>{p.title}</h3>
-                <p>{p.text}</p>
-              </article>
-            ))}
-          </div>
+          </dl>
         </div>
       </section>
 
       <section className="section section--dark journey">
         <div className="container">
-          <div className="journey-head reveal">
-            <p className="eyebrow eyebrow--sky eyebrow--center">The Tvesha journey</p>
-            <h2 className="display display--lg">From source <em>to shipment.</em></h2>
-          </div>
-          <ol className="journey-list">
-            {JOURNEY.map((j) => (
-              <li className="journey-item reveal" key={j.step}>
-                <span className="journey-num" aria-hidden="true">{j.step}</span>
-                <div>
-                  <h3>{j.title}</h3>
-                  <p>{j.text}</p>
-                </div>
+          <SectionHead
+            light
+            index="05"
+            eyebrow="The Tvesha journey"
+            title={<>From source <em>to shipment.</em></>}
+          />
+          <ol className="journey-track">
+            {JOURNEY.map((j, i) => (
+              <li className="journey-step reveal" key={j.step} style={{ '--reveal-delay': `${i * 120}ms` }}>
+                <span className="journey-dot" aria-hidden="true" />
+                <span className="journey-num">{j.step}</span>
+                <h3>{j.title}</h3>
+                <p>{j.text}</p>
               </li>
             ))}
           </ol>
@@ -231,63 +208,59 @@ export default function Home() {
       </section>
 
       <section className="section">
-        <div className="container">
-          <div className="philosophy-card reveal">
-            <div className="philosophy-copy">
-              <p className="eyebrow eyebrow--rule eyebrow--sky">The Tvesha philosophy</p>
-              <h2 className="display display--lg">Goodness, where <em>nature intended.</em></h2>
-              <p>
-                The world&rsquo;s most remarkable ingredients carry the character of the places
-                they come from. We seek out produce at its source, from fragrant Ceylon cinnamon
-                and aromatic cloves to kithul treacle, and bring it to you with its natural
-                character intact.
-              </p>
-              <div className="philosophy-actions">
-                <Link to="/products" className="btn btn-cream btn-sm">Explore Collection <span aria-hidden="true">&#8599;</span></Link>
-                <span className="chip chip--ghost">Cinnamon</span>
-                <span className="chip chip--ghost">Cardamom</span>
-                <span className="chip chip--ghost">Cloves</span>
-              </div>
-            </div>
-            <div className="philosophy-stack">
-              {PHILOSOPHY.map((p) => (
-                <div className="glass-card" key={p.tag}>
-                  <span className="glass-card-tag">{p.tag}</span>
-                  <h3>{p.title}</h3>
-                  <p>{p.text}</p>
-                </div>
-              ))}
-            </div>
+        <div className="container values">
+          <div className="values-head reveal">
+            <p className="eyebrow eyebrow--rule">(06) &nbsp;The Tvesha philosophy</p>
+            <h2 className="display display--lg">Goodness, where <em>nature intended.</em></h2>
+            <p>
+              The world&rsquo;s most remarkable ingredients carry the character of the places they
+              come from. We seek out produce at its source and bring it to you with its natural
+              character intact.
+            </p>
+            <Link to="/products" className="btn btn-primary">Explore the collection</Link>
+          </div>
+          <div className="values-list reveal">
+            {VALUES.map((v, i) => (
+              <details key={v.title} open={i === 0}>
+                <summary>
+                  <span className="values-num">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="values-title">{v.title}</span>
+                  <span className="values-icon" aria-hidden="true" />
+                </summary>
+                <p>{v.text}</p>
+              </details>
+            ))}
           </div>
         </div>
       </section>
 
       <section className="bleed-split">
-        <div className="bleed-split-media">
-          <img src={yarnImg} alt="Spools of 100% recycled cotton yarn" loading="lazy" />
-        </div>
         <div className="bleed-split-copy">
           <div className="reveal">
-            <p className="eyebrow eyebrow--sky eyebrow--underline">Beyond the spice rack</p>
+            <p className="eyebrow eyebrow--sky eyebrow--rule">(07) &nbsp;Beyond the spice rack</p>
             <h2 className="display display--lg">100% recycled <em>cotton yarn.</em></h2>
             <p>
               Crafted from post-consumer cotton garments, each strand embodies a commitment to
               reducing waste and preserving our planet. Available in any colour, with twisted
               and single threads.
             </p>
-            <Link to="/cotton-yarn" className="btn btn-line-sky">Discover Cotton Yarn</Link>
+            <Link to="/cotton-yarn" className="btn btn-ghost-light">Discover cotton yarn</Link>
           </div>
+        </div>
+        <div className="bleed-split-media">
+          <img src={yarnImg} alt="Spools of 100% recycled cotton yarn" loading="lazy" />
         </div>
       </section>
 
-      <section className="section section--cream2">
+      <section className="section">
         <div className="container">
           <SectionHead
+            index="08"
             eyebrow="Best loved"
-            title={<>Our Favourite <em>Picks</em></>}
+            title={<>Our favourite <em>picks</em></>}
             aside={<p>A curated selection of favourites, chosen for their distinctive flavour, character and quality.</p>}
           />
-          <ProductGrid products={homeProducts} columns={4} />
+          <ProductGrid products={favourites} columns={4} layout="bento" />
         </div>
       </section>
     </>

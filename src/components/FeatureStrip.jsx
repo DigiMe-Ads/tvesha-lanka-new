@@ -1,23 +1,32 @@
-const FEATURES = [
-  { title: 'Taste and Purity', text: 'Purity in every product we offer.' },
-  { title: 'Flavor Magic', text: 'An exquisite range of true flavour.' },
-  { title: 'Pure Natural', text: 'The goodness of nature, untouched.' },
-  { title: 'Export Ready', text: 'Shipped with care, worldwide.' },
+const ITEMS = [
+  'Taste & Purity',
+  'Ceylon Cinnamon',
+  'Flavour Magic',
+  'Cardamom',
+  'Pure & Natural',
+  'Black Pepper',
+  'Export Ready',
+  'Kithul Treacle',
+  'Cloves',
+  'Moringa',
 ]
 
+/**
+ * Endless scrolling ticker of the brand promises and signature products.
+ */
 export default function FeatureStrip() {
+  const row = ITEMS.map((item) => (
+    <span key={item} className="ticker-item">
+      {item}
+      <span className="ticker-star" aria-hidden="true">&#10022;</span>
+    </span>
+  ))
+
   return (
-    <section className="feature-strip">
-      <div className="container feature-strip-grid">
-        {FEATURES.map((f, i) => (
-          <div className="feature-strip-item" key={f.title}>
-            <span className="feature-strip-num">{String(i + 1).padStart(2, '0')}</span>
-            <div>
-              <h3>{f.title}</h3>
-              <p>{f.text}</p>
-            </div>
-          </div>
-        ))}
+    <section className="ticker" aria-label="What we offer">
+      <div className="ticker-track">
+        <div className="ticker-group">{row}</div>
+        <div className="ticker-group" aria-hidden="true">{row}</div>
       </div>
     </section>
   )

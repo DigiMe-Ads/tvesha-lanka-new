@@ -1,29 +1,30 @@
 import { Link } from 'react-router-dom'
-import Ornament from './Ornament.jsx'
 import bannerImg from '../assets/images/page-banner.jpg'
 
 /**
- * Title + breadcrumb banner at the top of every inner page.
- * `title` may contain an <em> for the italic blue accent word.
+ * Editorial page header for inner pages: breadcrumb, oversized title, side copy
+ * and a full-width image strip. `title` may contain an <em> accent word.
  */
-export default function PageBanner({ title, crumb, eyebrow, text }) {
+export default function PageBanner({ title, crumb, eyebrow, text, bgword }) {
   return (
-    <section className="page-banner">
+    <section className="page-hero">
+      <span className="page-hero-bgword" aria-hidden="true">{bgword ?? crumb}</span>
       <div className="container">
-        <div className="page-banner-card">
-          <img src={bannerImg} alt="" aria-hidden="true" className="page-banner-bg" />
-          <div className="page-banner-inner">
-            <nav aria-label="Breadcrumb" className="breadcrumb">
-              <Link to="/">Home</Link>
-              <span aria-hidden="true">/</span>
-              <span>{crumb}</span>
-            </nav>
+        <nav aria-label="Breadcrumb" className="breadcrumb">
+          <Link to="/">Home</Link>
+          <span aria-hidden="true">&mdash;</span>
+          <span aria-current="page">{crumb}</span>
+        </nav>
+        <div className="page-hero-grid">
+          <h1 className="page-hero-title">{title}</h1>
+          <div className="page-hero-side">
             {eyebrow && <p className="eyebrow eyebrow--rule">{eyebrow}</p>}
-            <h1 className="display">{title}</h1>
-            {text && <p className="page-banner-text">{text}</p>}
-            <Ornament light />
+            {text && <p>{text}</p>}
           </div>
         </div>
+      </div>
+      <div className="page-hero-strip" aria-hidden="true">
+        <img src={bannerImg} alt="" />
       </div>
     </section>
   )

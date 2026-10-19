@@ -1,15 +1,18 @@
 /**
- * Eyebrow + serif title on the left, optional supporting copy or link on the right.
+ * Numbered section heading: a ruled label line, a large serif title and optional
+ * supporting copy or link on the right. `title` may contain an <em> accent.
  */
-export default function SectionHead({ eyebrow, title, aside, light = false }) {
-  // `title` may contain an <em> for the italic blue accent word.
+export default function SectionHead({ index, eyebrow, title, aside, light = false }) {
   return (
     <div className={`section-head reveal${light ? ' section-head--light' : ''}`}>
-      <div>
-        {eyebrow && <p className="eyebrow eyebrow--rule">{eyebrow}</p>}
-        <h2 className="display">{title}</h2>
+      <div className="section-head-rule">
+        {index && <span className="section-head-index">({index})</span>}
+        {eyebrow && <span className="section-head-label">{eyebrow}</span>}
       </div>
-      {aside && <div className="section-head-aside">{aside}</div>}
+      <div className="section-head-body">
+        <h2 className="display">{title}</h2>
+        {aside && <div className="section-head-aside">{aside}</div>}
+      </div>
     </div>
   )
 }

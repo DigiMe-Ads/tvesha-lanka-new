@@ -20,7 +20,7 @@ export default function ContactForm() {
 
   return (
     <div className="contact-form-panel">
-      <p className="eyebrow eyebrow--rule">Enquiry form</p>
+      <p className="eyebrow eyebrow--rule">(02) &nbsp;Enquiry form</p>
       <h2 className="display">Send us <em>a message</em></h2>
       <form onSubmit={handleSubmit}>
         <div className="form-row">
@@ -47,7 +47,7 @@ export default function ContactForm() {
           <label htmlFor="message">Your Message</label>
           <textarea id="message" name="message" rows={6} value={form.message} onChange={handleChange} required />
         </div>
-        <button type="submit" className="btn btn-primary btn-block">Send Message</button>
+        <button type="submit" className="btn btn-primary btn-block">Send message <span aria-hidden="true">&rarr;</span></button>
         {submitted && <p className="form-thanks">Thanks for reaching out — we&rsquo;ll be in touch shortly.</p>}
       </form>
     </div>
